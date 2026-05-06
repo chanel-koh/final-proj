@@ -1,9 +1,12 @@
 from kaggle.api.kaggle_api_extended import KaggleApi
 import pandas as pd
 from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy_utils import database_exists, create_database
+from local_settings import postgresql as settings
 
 class DataManager:
-    def __init__(self, dataset: str, save_path: str, file_name: str) -> None:
+    def __init__(self, dataset: str, save_path: str) -> None:
         """
         Initializes a dataset to load.
 
@@ -15,7 +18,6 @@ class DataManager:
         """
         self.dataset = dataset
         self.save_path = save_path
-        self.file_path = f"{save_path}/{file_name}"
 
     def download(self) -> None:
         """
@@ -35,17 +37,23 @@ class DataManager:
         Loads the dataset into a dataframe, then performs preliminary cleaning by removing column 
         whitespace and any duplicate rows.
         """
-        df = pd.read_csv(self.file_path)
+        df = pd.read_csv("data/df_2.csv")
+
         df = df.drop_duplicates()
         df.columns = [c.lower().strip for c in df.columns]
+
+        df = df[["id", "name", "location", "description"]]
+        df[["state", "coords"]] = df["raw"].str.extract(r"^([A-Za-z\s]+)(.*)$")
+        df = df.drop(columns=["location"])
+
         return df
     
-    class Pipeline:
-        def __init__(self, data_handler: DataManager, db_url: str):
-            self.data_handler = data_handler
-            self.engine = create_engine(db_url)
+class Pipeline:
+    def __init__(self, data_handler: DataManager, db_url: str):
+        self.data_handler = data_handler
+        self.engine = create_engine(db_url)
 
-        def run(self, table_name: str) -> None:
-            self.data_handler.download()
-            df = self.data_handler.load_and_clean()
-            df.to_sql(table_name, self.engine, if_exists="replace", index=False)
+    def run(self, table_name: str) -> None:
+        self.data_handler.download()
+        df = self.data_handler.load_and_clean()
+        df.to_sql(table_name, self.engine, if_exists="replace", index=False)
