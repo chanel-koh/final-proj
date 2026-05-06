@@ -15,11 +15,12 @@ def main():
 
     menu = MenuView()
     database_manager = DatabaseManager(engine)
+    database_manager.create_tables()
 
-    app = AppController(menu, database_manager)
+    # app = AppController(menu, database_manager)
 
-    pipeline.run("national_park", "data/raw/df_2.csv")
-    app.run(['1', '2', '3', '4'])
+    # pipeline.run("national_park", "data/raw/df_2.csv")
+    # app.run(['1', '2', '3', '4'])
 
 if __name__ == "__main__":
     main()

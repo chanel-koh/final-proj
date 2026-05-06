@@ -1,6 +1,8 @@
-from sqlalchemy.orm import declarative_base
+from sqlalchemy.orm import DeclarativeBase
 
-Base = declarative_base()
+
+class Base(DeclarativeBase):
+    pass
 
 class DatabaseManager:
     """
@@ -13,5 +15,10 @@ class DatabaseManager:
         """
         Creates all tables specified in the models folder.
         """
+        from models.user import User
+        from models.park import Park
+        from models.trail import Trail
+        from models.associations import visited_parks, completed_trails
+
         Base.metadata.create_all(self.engine)
         
