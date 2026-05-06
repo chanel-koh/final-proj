@@ -41,6 +41,7 @@ class MenuView:
             if choice == "3":
                 continue
             if choice == "4":
+                print("Heading back to main menu!")
                 break
 
     def park_menu(self):
@@ -66,6 +67,7 @@ class MenuView:
             if choice == "4":
                 continue
             if choice == "5":
+                print("Heading back to main menu!")
                 break
 
     def trail_menu(self):
@@ -85,6 +87,7 @@ class MenuView:
             if choice == "2":
                 continue
             if choice == "3":
+                print("Heading back to main menu!")
                 break
 
     
