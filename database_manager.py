@@ -1,12 +1,15 @@
-from sqlalchemy import text
+import pandas as pd
 
 class DatabaseManager:
+    """
+    Handles queries from user choices.
+    """
     def __init__(self, engine):
         self.engine = engine
 
     def get_parks(self):
-        with self.engine.connect() as conn:
-            result = conn.execute(text("SELECT * FROM parks_n_trails"))
-            return result.fetchall()
+        query = "SELECT * FROM national_park"
+        df = pd.read_sql(query, self.engine)
+        return df
         
     ## more actions to be added 
