@@ -1,6 +1,6 @@
 class PostgresConfig:
-    user = "your_user",
-    passwd =  "your_password",
-    host =  "localhost",
-    port =  "5432",
-    db =  "your_database"
+    user = "chanelk"
+    passwd =  ""
+    host =  "localhost"
+    port =  5432
+    db =  "parks_n_trails"

@@ -8,10 +8,9 @@ def main():
 
     pipeline = Pipeline(
         data_handler=dataset_manager,
-        db_url="sqlite:///park_n_trail.db"
     )
 
-    pipeline.run("NationalPark")
+    pipeline.run("NationalPark", "data/raw/df_2.csv")
 
 if __name__ == "__main__":
     main()
