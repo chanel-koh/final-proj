@@ -48,6 +48,8 @@ class DataManager:
         df[["state", "coords"]] = df["location"].str.extract(r"^([A-Za-z\s]+)(.*)$")
         df = df.drop(columns=["location"])
 
+        df = df[["name", "state", "description"]]
+
         return df
     
 class Pipeline:
