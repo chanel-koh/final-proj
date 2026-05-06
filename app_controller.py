@@ -3,17 +3,18 @@ class AppController:
         self.menu = menu
         self.database = database
 
-    def run(self):
+    def run(self, valid_choices):
         while True:
             self.menu.display_menu()
-            choice = self.menu.get_choice()
+            choice = self.menu.get_choice(valid_choices)
 
             if choice == "1":
                 parks = self.database.get_parks()
                 print(parks)
 
             elif choice == "2":
-                ## todo
+                parks = self.database.get_parks()
+                print(parks)
                 continue
 
             elif choice == "3":
