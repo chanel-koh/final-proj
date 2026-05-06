@@ -8,3 +8,6 @@ wheels/
 
 # Virtual environments
 .venv
+
+# Sensitive config
+local_settings.py
