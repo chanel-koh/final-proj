@@ -1,7 +1,7 @@
-from data_manager import DataManager, Pipeline
+from data_loader import DataLoader, Pipeline
 
 def main():
-    dataset_manager = DataManager(
+    dataset_manager = DataLoader(
         dataset="thedevastator/the-united-states-national-parks",
         save_path="data/raw"
         )
