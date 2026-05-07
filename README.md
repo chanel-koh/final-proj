@@ -1,18 +1,18 @@
-# ParkNTrailTracker
-ParkNTrailTracker lets users explore and track national parks and park trails they have visited. Helpful for deciding your next national park to visit or to remember your best hiking memories, this tracker has your back.
+# Park N Trail Tracker
+Park N Trail Tracker lets users explore and track national parks and park trails they have visited. Helpful for deciding your next national park to visit or to remember your best hiking memories, this tracker has your back.
 
 ## Setup and Running
 
 ### Using uv
-1. 'curl -LsSf https://astral.sh/uv/install.sh | sh' (for macOS/Linux)
-    OR 'pip install uv' if you have pip installed
-2. Clone the repo: 'git clone [<your-repo-url>](https://github.com/chanel-koh/park-n-trail-tracker.git)'
-3. 'cd park-n-trail-tracker'
-4. To create and sync the environment: 'uv sync'
-5. Running the project: 'uv run python main.py'
-Note: If you would like to keep a log, run 'uv run main.py > db_logs.txt' OR 'uv run main.py | tee db_logs.txt' if you would also like to see terminal output.
+1. ```curl -LsSf https://astral.sh/uv/install.sh | sh``` (for macOS/Linux)
+    OR ```pip install uv``` if you have pip installed
+2. Clone the repo: ```git clone [<your-repo-url>](https://github.com/chanel-koh/park-n-trail-tracker.git)```
+3. ```cd park-n-trail-tracker```
+4. To create and sync the environment: ```uv sync```
+5. Running the project: ```uv run python main.py```
+<br>Note: If you would like to keep a log, run ```uv run main.py > db_logs.txt``` OR ```uv run main.py | tee db_logs.txt``` if you would also like to see terminal output.
 
 ### Setup Kaggle API for seeding database
 1. Go to Kaggle -> Settings -> API
 2. Create a new API token
-3. In your terminal: 'export KAGGLE_API_TOKEN=your_token_here'
+3. In your terminal: ```export KAGGLE_API_TOKEN=your_token_here```
