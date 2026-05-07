@@ -1,5 +1,6 @@
 from sqlalchemy import Column, String, Integer, Identity
 from sqlalchemy.orm import relationship
+from associations import visited_parks
 from database_manager import Base
 
 class Park(Base):
@@ -11,3 +12,4 @@ class Park(Base):
     description = Column(String, nullable=False)
 
     trails = relationship("Trail", back_populates="park")
+    visitors = relationship("User", secondary=visited_parks, back_populates="visited_parks")
