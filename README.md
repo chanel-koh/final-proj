@@ -10,6 +10,7 @@ ParkNTrailTracker lets users explore and track national parks and park trails th
 3. 'cd park-n-trail-tracker'
 4. To create and sync the environment: 'uv sync'
 5. Running the project: 'uv run python main.py'
+Note: If you would like to keep a log, run 'uv run main.py > db_logs.txt' OR 'uv run main.py | tee db_logs.txt' if you would also like to see terminal output.
 
 ### Setup Kaggle API for seeding database
 1. Go to Kaggle -> Settings -> API
