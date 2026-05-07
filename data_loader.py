@@ -2,6 +2,7 @@ from kaggle.api.kaggle_api_extended import KaggleApi
 import pandas as pd
 import os
 from database_manager import DatabaseManager
+from models.park import Park
 
 class DataLoader:
     def __init__(self, dataset: str, save_path: str) -> None:
@@ -52,12 +53,31 @@ class DataLoader:
 class Pipeline:
     def __init__(self, data_handler: DataLoader, db_manager: DatabaseManager):
         self.data_handler = data_handler
-        self.engine = db_manager.engine
+        self.db_manager = db_manager
 
-    def run(self, table_name: str, datafile_path: str) -> None:
+    def run(self, datafile_path: str) -> None:
         """
         Runs the full data seeding pipeline of downloading the external data, cleaning it, and conversion to sql.
         """
         self.data_handler.download()
         df = self.data_handler.load_and_clean(datafile_path)
-        df.to_sql(table_name, self.engine, if_exists="replace", index=False)
+        session = self.db_manager.get_session()
+
+        for _, row in df.iterrows():
+            park = Park(
+                park_name=row["name"],
+                us_state=row["state"],
+                description=row["description"]
+            )
+
+            existing = session.query(Park).filter_by(
+            park_name=park.park_name,
+            us_state=park.us_state
+            ).first()
+
+            if not existing:
+                session.add(park)
+
+            session.commit()
+
+        session.close()
