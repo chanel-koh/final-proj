@@ -15,4 +15,4 @@ Note: If you would like to keep a log, run 'uv run main.py > db_logs.txt' OR 'uv
 ### Setup Kaggle API for seeding database
 1. Go to Kaggle -> Settings -> API
 2. Create a new API token
-3. In your terminal: 'KAGGLE_API_TOKEN=your_token_here'
+3. In your terminal: 'export KAGGLE_API_TOKEN=your_token_here'
