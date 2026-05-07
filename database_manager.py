@@ -23,7 +23,7 @@ class DatabaseManager:
         if not database_exists(url):
             create_database(url)
         
-        engine = create_engine(url, pool_size=15, echo=False)
+        engine = create_engine(url, pool_size=15, echo=True)
 
         return engine
     

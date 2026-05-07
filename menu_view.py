@@ -67,8 +67,6 @@ class MenuView:
                 choice = self.get_choice(["1", "2", "3", "4", "5"])
 
                 if choice == "1":
-                    session = db_manager.SessionLocal()
-
                     term = input("\nSearch for a park: ")
                     results = session.query(Park).filter(Park.park_name.ilike(f"%{term}%")).all()
 
@@ -99,11 +97,40 @@ class MenuView:
                         print(f"{park.park_name} ({park.us_state}) - Visited on {visit_date}")
 
                 if choice == "3":
-                    continue
+                    results = (
+                        session.query(Park)
+                        .outerjoin(visited_parks, 
+                                   (Park.id == visited_parks.c.park_id) &
+                                   (visited_parks.c.username == active_user.username)
+                        )
+                        .filter(visited_parks.c.park_id.is_(None))
+                        .all()
+                    )
+
+                    print("\n--- Unvisited Parks ---")
+                    for park in results:
+                        print(f"{park.park_name}")
+
                 if choice == "4":
-                    continue
+                    term = input("\nSearch for a park: ")
+                    results = session.query(Park).filter(Park.park_name.ilike(f"%{term}%")).all()
+
+                    if not results:
+                        print("No parks found.")
+                        return
+
+                    print()
+                    for i, park in enumerate(results):
+                        print(f"{i + 1}. {park.park_name} ({park.us_state})")
+
+                    choice = int(input("Select a park by number: ")) - 1
+
+                    selected_park = results[choice]
+                    print(f"\n{selected_park.park_name} ({selected_park.us_state})")
+                    print(f"Description: {selected_park.description}")
+
                 if choice == "5":
-                    print("Heading back to main menu!")
+                    print("\nHeading back to main menu!")
                     break
 
     def trail_menu(self):
