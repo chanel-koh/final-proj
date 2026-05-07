@@ -1,6 +1,6 @@
 from sqlalchemy import Column, String, Integer, Identity
 from sqlalchemy.orm import relationship
-from associations import visited_parks
+from models.associations import visited_parks
 from database_manager import Base
 
 class Park(Base):

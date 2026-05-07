@@ -1,4 +1,5 @@
 from models.user import User
+from datetime import date
 
 class AppController:
     """
@@ -16,12 +17,22 @@ class AppController:
         user = session.query(User).filter_by(username=username).first()
 
         if not user:
-            print("User not found. Creating new account...")
-            user = User(username=username)
-            session.add(user)
-            session.commit()
-            session.refresh(user) 
-            print(f"Created user: {user.username}")
+            print("\nUser not found.")
+            print("Would you like to:")
+            print("1. Create new user")
+            print("2. Try again")
+
+            choice = input("Choice: ")
+
+            if choice == "1":
+                email = input("Enter email: ").strip()
+                user = User(username=username, email=email, date_joined=date.today())
+                session.add(user)
+                session.commit()
+                session.refresh(user) 
+                print(f"\nCreated user: {user.username}")
+            if choice == "2":
+                self.login()
 
         self.active_user = user
         print(f"Logged in as {self.active_user.username}")

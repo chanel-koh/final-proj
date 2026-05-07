@@ -16,7 +16,7 @@ def main():
 
     app = AppController(menu, db_manager)
 
-    pipeline.run("national_park", "data/raw/df_2.csv")
+    pipeline.run("data/raw/df_2.csv")
     app.run(['1', '2', '3', '4'])
 
 if __name__ == "__main__":

@@ -1,5 +1,6 @@
 from sqlalchemy import select
 from models.park import Park
+from models.associations import visited_parks
 
 class MenuView:
     def main_menu(self):
@@ -59,34 +60,51 @@ class MenuView:
             print("4. See Park Description")
             print("5. Back")
 
-            choice = self.get_choice(["1", "2", "3", "4", "5"])
+            with db_manager.SessionLocal() as session:
 
-            if choice == "1":
-                term = input("Search for a park: ")
-                results = db_manager.SessionLocal.query(Park).filter(Park.park_name.ilike(f"%{term}%")).all()
+                active_user = session.merge(active_user)
 
-                if not results:
-                    print("No parks found.")
-                    return
+                choice = self.get_choice(["1", "2", "3", "4", "5"])
 
-                for i, park in enumerate(results):
-                    print(f"{i + 1}. {park.park_name} ({park.us_state})")
+                if choice == "1":
+                    session = db_manager.SessionLocal()
 
-                choice = int(input("Select a park by number: ")) - 1
+                    term = input("\nSearch for a park: ")
+                    results = session.query(Park).filter(Park.park_name.ilike(f"%{term}%")).all()
 
-                selected_park = results[choice]
-                active_user.visited_parks.append(selected_park)
-                db_manager.SessionLocal.commit()
+                    if not results:
+                        print("No parks found.")
+                        return
 
-            if choice == "2":
-                continue
-            if choice == "3":
-                continue
-            if choice == "4":
-                continue
-            if choice == "5":
-                print("Heading back to main menu!")
-                break
+                    print()
+                    for i, park in enumerate(results):
+                        print(f"{i + 1}. {park.park_name} ({park.us_state})")
+
+                    choice = int(input("Select a park by number: ")) - 1
+
+                    selected_park = results[choice]
+                    active_user.visited_parks.append(selected_park)
+                    session.commit()
+
+                if choice == "2":
+                    results = (
+                        session.query(visited_parks, Park)
+                        .join(Park, visited_parks.c.park_id == Park.id)
+                        .filter(visited_parks.c.username == active_user.username)
+                        .all()
+                    )
+                    
+                    print("\n--- Visited Parks ---")
+                    for _, _, visit_date, park in results:
+                        print(f"{park.park_name} ({park.us_state}) - Visited on {visit_date}")
+
+                if choice == "3":
+                    continue
+                if choice == "4":
+                    continue
+                if choice == "5":
+                    print("Heading back to main menu!")
+                    break
 
     def trail_menu(self):
         """ 

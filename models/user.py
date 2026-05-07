@@ -1,6 +1,6 @@
 from sqlalchemy import Column, String, Date
 from sqlalchemy.orm import relationship
-from associations import visited_parks
+from models.associations import visited_parks
 from database_manager import Base
 from datetime import date
 

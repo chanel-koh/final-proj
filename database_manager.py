@@ -31,7 +31,7 @@ class DatabaseManager:
         """
         Gets the current session.
         """
-        return self.SessionLocal
+        return self.SessionLocal()
     
     def create_tables(self):
         """

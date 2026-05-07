@@ -8,7 +8,6 @@ visited_parks = Table(
     Column("username", String, ForeignKey("user.username"), primary_key=True),
     Column("park_id", Integer, ForeignKey("park.id"), primary_key=True),
     Column("visit_date", Date, nullable=False, default=date.today),
-    Column("rating", Integer, nullable=False)
 )
 
 completed_trails = Table(
