@@ -43,4 +43,3 @@ class DatabaseManager:
         from models.associations import visited_parks, completed_trails
 
         Base.metadata.create_all(self.engine)
-        
