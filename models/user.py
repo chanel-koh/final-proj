@@ -1,6 +1,6 @@
 from sqlalchemy import Column, String, Date
 from sqlalchemy.orm import relationship
-from models.associations import visited_parks
+from models.associations import visited_parks, completed_trails
 from database_manager import Base
 from datetime import date
 
@@ -12,3 +12,4 @@ class User(Base):
     date_joined = Column(Date, nullable=False, default=date.today)
 
     visited_parks = relationship("Park", secondary=visited_parks, back_populates="visitors")
+    trails = relationship("Trail", secondary=completed_trails, back_populates="users")

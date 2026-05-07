@@ -50,13 +50,13 @@ class AppController:
             choice = self.menu.get_choice(valid_choices)
 
             if choice == "1":
-                self.menu.user_menu(self.active_user)
+                self.menu.user_menu(self.active_user, self.db_manager)
 
             elif choice == "2":
                 self.menu.park_menu(self.active_user, self.db_manager)
 
             elif choice == "3":
-                self.menu.trail_menu(self.active_user)
+                self.menu.trail_menu(self.active_user, self.db_manager)
 
             elif choice == "4":
                 print("\nGoodbye, enjoy the parks out there!\n")
