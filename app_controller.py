@@ -2,16 +2,15 @@ class AppController:
     """
     Manages user activity navigation.
     """
-    def __init__(self, menu, database):
+    def __init__(self, menu):
         self.menu = menu
-        self.database = database
 
     def run(self, valid_choices):
         """
         Displays main menu and handles submenu activity.
         """
         while True:
-            self.menu.display_menu()
+            self.menu.main_menu()
             choice = self.menu.get_choice(valid_choices)
 
             if choice == "1":
@@ -24,6 +23,6 @@ class AppController:
                 self.menu.trail_menu()
 
             elif choice == "4":
-                print("Goodbye, enjoy the parks out there!")
+                print("\nGoodbye, enjoy the parks out there!\n")
                 break
 
