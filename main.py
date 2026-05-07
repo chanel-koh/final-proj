@@ -13,7 +13,6 @@ def main():
     pipeline = Pipeline(data_handler=dataset_loader, db_manager=db_manager)
     menu = MenuView()
     db_manager.create_tables()
-
     app = AppController(menu, db_manager)
 
     pipeline.run("data/raw/df_2.csv")
