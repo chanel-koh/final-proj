@@ -1,10 +1,7 @@
 from kaggle.api.kaggle_api_extended import KaggleApi
 import pandas as pd
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy_utils import database_exists, create_database
-from local_settings import PostgresConfig as settings
 import os
+from database_manager import DatabaseManager
 
 class DataLoader:
     def __init__(self, dataset: str, save_path: str) -> None:
@@ -53,37 +50,9 @@ class DataLoader:
         return df
     
 class Pipeline:
-    def __init__(self, data_handler: DataLoader):
+    def __init__(self, data_handler: DataLoader, db_manager: DatabaseManager):
         self.data_handler = data_handler
-        self.engine = self.get_engine_config_from_settings()
-
-    
-    def get_engine(self, user: str, passwd: str, host: str, port: int, db: str):
-        """
-        Creates a db connection with SQLALchemy with user defined pool size (persistent connections kept open).
-        """
-        url = f"postgresql://{user}:{passwd}@{host}:{port}/{db}"
-
-        if not database_exists(url):
-            create_database(url)
-        
-        engine = create_engine(url, pool_size=15, echo=False)
-
-        return engine
-    
-    def get_engine_config_from_settings(self):
-        """
-        Gets config information from local settings file to establish db connection.
-        """
-        
-        return self.get_engine(settings.user, settings.passwd, settings.host, settings.port, settings.db)
-    
-    def get_session(self):
-        """
-        Gets current db session.
-        """
-        Session = sessionmaker(bind=self.engine)
-        return Session
+        self.engine = db_manager.engine
 
     def run(self, table_name: str, datafile_path: str) -> None:
         """
